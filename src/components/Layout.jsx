@@ -1,11 +1,16 @@
 /* eslint-disable react/prop-types */
 import Nav from './Nav';
 import Footer from './Footer';
+import {useLocation} from 'react-router-dom'
 
 const Layout = ({children}) => {
+	
+	const location = useLocation()
 	return(
-	<main className="w-screen p-3 overflow-x-hidden box-border grid grid-cols-1 grid-rows-3 justify-center ">
-		<Nav />
+	<main className="px-4">
+	{
+		location.pathname === "/signup" || location.pathname === "/signin" ? "" : <Nav />
+	}
 		<main className="w-full">
 			{children}
 		</main>

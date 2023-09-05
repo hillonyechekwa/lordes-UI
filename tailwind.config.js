@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
     "node_module/preline/dist/*.js"
     ],
+  darkMode: 'class',
   theme: {
+    fontFamily: {
+      sans: ['Inter', 'sans-serif']
+    },
     extend: {},
   },
   plugins: [
