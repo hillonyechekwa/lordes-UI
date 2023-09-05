@@ -33,7 +33,8 @@
     "react-helmet": "^6.1.0",
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.14.0",
-    "use-shopping-cart": "^3.1.8"
+    "use-shopping-cart": "^3.1.8",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

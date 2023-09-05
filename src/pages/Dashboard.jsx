@@ -42,16 +42,23 @@ const Dashboard = ( ) => {
 				This is a user dashboard
 			</section>
 			{
-				data.me.role === 'STYLIST' ? 
-				<>
-					
-				</>
-				: 
-				<>
-				
-				</>
+				data.me.role === 'STYLIST' &&
+				(
+					<></>
+				)
 			}
-			
+			{
+				data.me.role === 'MERCHANT' && 
+				(
+					<></>
+				)
+			}
+			{
+				data.me.role === 'USER' && 
+				(
+					<></>
+				)
+			}
 			
 		</main>
 	)

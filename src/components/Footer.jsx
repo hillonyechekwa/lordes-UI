@@ -1,4 +1,4 @@
-
+import {Link} from 'react-router-dom'
 
 
 const Footer = () => {
@@ -16,15 +16,15 @@ const Footer = () => {
         <h4 className="font-semibold text-gray-100">Product</h4>
 
         <div className="mt-3 grid space-y-3">
+          <p><a className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="#">Home</a></p>
           <p><a className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="#">Pricing</a></p>
-          <p><a className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="#">Changelog</a></p>
-          <p><a className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="#">Docs</a></p>
+          <p><a className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="#">Market</a></p>
         </div>
       </div>
      
 
       <div className="col-span-1">
-        <h4 className="font-semibold text-gray-100">Company</h4>
+        <h4 className="font-semibold text-gray-100">Team</h4>
 
         <div className="mt-3 grid space-y-3">
           <p><a className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200" href="#">About us</a></p>
@@ -35,7 +35,7 @@ const Footer = () => {
       </div>
      
 
-      <div className="col-span-2">
+      {/* <div className="col-span-2">
         <h4 className="font-semibold text-gray-100">Stay up to date</h4>
 
         <form>
@@ -52,14 +52,14 @@ const Footer = () => {
             New UI kits or big discounts. Never spam.
           </p>
         </form>
-      </div>
+      </div> */}
      
     </div>
     
 
     <div className="mt-5 sm:mt-12 grid gap-y-2 sm:gap-y-0 sm:flex sm:justify-between sm:items-center">
       <div className="flex justify-between items-center">
-        <p className="text-sm text-gray-400">© 2022 Preline. All rights reserved.</p>
+        <p className="text-sm text-gray-400">© 2023 Lorde's. All rights reserved.</p>
       </div>
      
 
