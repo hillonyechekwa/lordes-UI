@@ -2,6 +2,7 @@
 import {useQuery, gql} from '@apollo/client'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import Spinner from '../components/Spinner'
 
 const GET_MARKET = gql`
 	query Market{
@@ -21,7 +22,7 @@ const GET_MARKET = gql`
 const Market = () => {
 	const {data, loading, error} = useQuery(GET_MARKET)
 	
-	if (loading) return <p>...loading</p>
+	if (loading) return <Spinner/>
 	if (error) return <p>Error {error.message} </p>
 	if (data === undefined) return <p>Error loading data {error.message} </p>
 	

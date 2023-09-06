@@ -5,7 +5,7 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
     "node_module/preline/dist/*.js"
     ],
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     fontFamily: {
       sans: ['Inter', 'sans-serif']

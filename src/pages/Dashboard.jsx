@@ -1,5 +1,7 @@
 import {useQuery, gql} from '@apollo/client';
 import {Helmet} from 'react-helmet'
+import SideBar from '../components/SideBar'
+import Card from '../components/HoverCard'
 
 
 const GET_USERS = gql`

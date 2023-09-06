@@ -59,12 +59,18 @@ const UserForm = ({ formType, action }) => {
 
 
   return (
-    <main className="w-full h-full p-4 grid grid-cols-2 grid-rows-1 justify-evenly items-center">
+    <main className="w-full h-auto p-4 grid grid-cols-2 grid-rows-1 justify-evenly items-center">
       <Helmet>
         <meta charSet="UTF-8" />
         <title>Lorde&apos;s - {formType === 'signup' ? 'Sign Up' : 'Sign In'}</title>
       </Helmet>
-      <section className="w-full relative p-4">
+      <section className="w-full relative p-12">
+      <Link className="mb-12 w-full sm:w-auto inline-flex  justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-slate-500 hover:text-violet-700 focus:outline-none focus:ring-2 ring-offset-white focus:ring-violet-500 focus:ring-offset-2 transition-all text-sm py-3 px-4 dark:ring-offset-slate-900" to="/">
+            <svg className="w-2.5 h-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M11.2792 1.64001L5.63273 7.28646C5.43747 7.48172 5.43747 7.79831 5.63273 7.99357L11.2792 13.64" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            Go back
+          </Link>
         {
           formType === "signup" ?
             <img className="w-full rounded-lg" src="/images/third-section-3.jpg" alt="signup page image" />
@@ -76,15 +82,16 @@ const UserForm = ({ formType, action }) => {
 
 
         <form onSubmit={formik.handleSubmit} className="w-full flex flex-col h-auto justify-between font-sans items-center relative">
-          <header className="w-full h-40 rounded-lg p-6 flex justify-around items-center flex-col text-center bg-black text-white mb-6">
+          <header className="w-full h-40 rounded-lg p-6 flex justify-around items-center flex-col font-sans text-center bg-white text-violet-900 mb-6 dark:bg-slate-700 dark: text-white">
             {formType === 'signup' ?
               <>
-                <h1 className="text-3xl font-semibold break-words capitalize">Join the Millions of people to access the best of hair services and products</h1>
-                <p>Sign up and start enjoying the services provided my millions of stylist</p>
-              </> :
+                <h1 className="text-3xl font-semibold break-words capitalize">Sign Up</h1>
+                <p className="font-thin text-slate-600">Join lorde's to gain access the hair services provided my millions of stylists</p>
+              </> 
+              :
               <>
                 <h1 className="text-3xl font-semibold break-words capitalize">Welcome back</h1>
-                <p>Let&apos;s make that hair look great</p>
+                <p className="font-thin text-slate-600">Let&apos;s make that hair look great</p>
               </>}
           </header>
           {/* username and email */}
@@ -92,10 +99,10 @@ const UserForm = ({ formType, action }) => {
             formType === "signup" ?
               <>
                 {/* ---------email----------- */}
-                <div>
-                  <label htmlFor="email" className="block text-sm mb-2 dark:text-white">Email address</label>
+                <div className="font-sans">
+                  <label htmlFor="email" className="block mt-5 text-sm mb-2 font-semibold text-slate-500 dark:text-white">Email address*</label>
                   <div className="relative">
-                    <input type="email" id="email" name="email" {...formik.getFieldProps('email')} className="py-3 px-2 block w-full border-gray-500 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
+                    <input type="email" id="email" name="email" {...formik.getFieldProps('email')} placeholder="Your email here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
                     <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
                       <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
@@ -107,10 +114,10 @@ const UserForm = ({ formType, action }) => {
                   ) : null}
                 </div>
                 {/* ------------username------------ */}
-                <div>
-                  <label htmlFor="username" className="block text-sm mb-2 dark:text-white">Username</label>
+                <div className="font-sans">
+                  <label htmlFor="username" className="block mt-5 text-sm mb-2 text-slate-500 font-semibold dark:text-white">Username*</label>
                   <div className="relative">
-                    <input type="username" id="username" name="username" {...formik.getFieldProps('username')} className="py-3 px-2 block w-full border-gray-500 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
+                    <input type="username" id="username" name="username" {...formik.getFieldProps('username')} placeholder="Your username here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
                     <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
                       <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
@@ -126,9 +133,9 @@ const UserForm = ({ formType, action }) => {
               <>
               {/* -------------email------------- */}
                 <div>
-                  <label htmlFor="email" className="block text-sm mb-2 dark:text-white">Email address</label>
+                  <label htmlFor="email" className="block mt-5 text-sm font-semibold text-slate-500 mb-2 dark:text-white">Email address</label>
                   <div className="relative">
-                    <input type="email" id="email" name="email" {...formik.getFieldProps('email')} className="py-3 px-2 block w-full border-gray-500 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
+                    <input type="email" id="email" name="email" {...formik.getFieldProps('email')} placeholder="Your email here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
                     <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
                       <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
@@ -139,12 +146,12 @@ const UserForm = ({ formType, action }) => {
                     <p className="hidden text-xs text-red-600 mt-2" id="email-error">{formik.errors.email}</p>
                   ) : null}
                 </div>
-                <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
+                <div className="py-3 flex items-center font-medium text-xs text-gray-600 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
                 {/* -----------username------------ */}
                 <div>
-                  <label htmlFor="username" className="block text-sm mb-2 dark:text-white">Username</label>
+                  <label htmlFor="username" className="block mt-5 text-sm font-semibold text-slate-500 mb-2 dark:text-white">Username</label>
                   <div className="relative">
-                    <input type="username" id="username" name="username" {...formik.getFieldProps('username')} className="py-3 px-2 block w-full border-gray-500 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
+                    <input type="username" id="username" name="username" {...formik.getFieldProps('username')} placeholder="Your username here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
                     <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
                       <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
@@ -162,10 +169,10 @@ const UserForm = ({ formType, action }) => {
               <>
                 <div>
                   <div className="flex justify-between items-center">
-                    <label htmlFor="password" value={formik.values.password} onChange={handleChange} className="block text-sm mb-2 dark:text-white">Password</label>
+                    <label htmlFor="password" className="block mt-5 text-sm font-semibold text-slate-500 mb-2 dark:text-white">Password*</label>
                   </div>
                   <div className="relative">
-                    <input type="password" id="password" name="password" {...formik.getFieldProps('password')} className="py-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="password-error" />
+                    <input type="password" id="password" name="password" {...formik.getFieldProps('password')} placeholder="Your password here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="password-error" />
                     <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
                       <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
@@ -178,10 +185,10 @@ const UserForm = ({ formType, action }) => {
                 </div>
                 <div>
                   <div className="flex justify-between items-center">
-                    <label htmlFor="confirmPassword" value={formik.values.confirmPassword} onChange={handleChange} className="block text-sm mb-2 dark:text-white">Password</label>
+                    <label htmlFor="confirmPassword" className="block mt-5 text-sm font-semibold text-slate-500 mb-2 dark:text-white">Confirm Password*</label>
                   </div>
                   <div className="relative">
-                    <input type="password" id="confirmPassword" name="confirmPassword" {...formik.getFieldProps('confirmPassword')} className="py-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="password-error" />
+                    <input type="password" id="confirmPassword" name="confirmPassword" {...formik.getFieldProps('confirmPassword')} placeholder="Confirm your password" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="password-error" />
                     <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
                       <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
@@ -197,11 +204,11 @@ const UserForm = ({ formType, action }) => {
               <>
                 <div>
                   <div className="flex justify-between items-center">
-                    <label htmlFor="password" value={formik.values.password} onChange={handleChange} className="block text-sm mb-2 dark:text-white">Password</label>
+                    <label htmlFor="password" className="block mt-5 text-sm mb-2 text-slate-500 font-semibold dark:text-white">Password*</label>
                     <Link className="text-sm text-blue-600 decoration-2 hover:underline font-medium" to="/forgotpassword">Forgot password?</Link>
                   </div>
                   <div className="relative">
-                    <input type="password" id="password" name="password" {...formik.getFieldProps('password')} className="py-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="password-error" />
+                    <input type="password" id="password" name="password" {...formik.getFieldProps('password')} placeholder="Your password here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="password-error" />
                     <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
                       <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
@@ -214,13 +221,12 @@ const UserForm = ({ formType, action }) => {
                 </div>
               </>
           }
-            // roles
           {
             formType === "signup" && (
-              <>
-                <label htmlForor="select-1" class="block text-sm font-medium mb-2 dark:text-white">I am signing up to:</label>
-                <select id="role" name="role" {...formik.getFieldProps('role')} class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" required>
-                  <option selected value="">I am signing up to </option>
+              <div className="px-4">
+                <label htmlForor="select-1" class="block mt-5 text-sm font-semibold text-slate-500 mb-2 dark:text-white">I am signing up to:*</label>
+                <select id="role" name="role" {...formik.getFieldProps('role')} class="py-3 px-4 pr-9 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" required>
+                  <option defaultValue="">I am signing up to </option>
                   <option value="user">get hair services</option>
                   <option value="stylist">render hair services as a styist</option>
                   <option value="merchant">sell hair products as a merchant</option>
@@ -228,28 +234,33 @@ const UserForm = ({ formType, action }) => {
                 {formik.touched.role && formik.errors.role? (
                   <p class="text-sm text-red-600 mt-2">Please select a valid state. {formik.errors.role}</p>
                 ): null}
-              </>
+              </div>
             )
           }
+          
+           <button type="submit" className="mt-8 py-3 px-20 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-violet-600 text-white hover:bg-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+            {formType === "signup"? "Sign Up" : "Sign In"}
+           </button>
+
           {
             formType === "signup"?
             <>
                 <div className="p-2 sm:p-7">
 
-                  <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
 
                   <div className="text-center">
-                    <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Sign up</h1>
-                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                    {/* <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Sign up</h1> */}
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                       Already have an account?
-                      <Link className="text-blue-600 decoration-2 hover:underline font-medium" to="/signup">
+                      <Link className="text-violet-600 decoration-2 hover:underline font-medium" to="/signin">
                         Sign in here
                       </Link>
                     </p>
                   </div>
 
+                  <div className="py-3 flex items-center text-xs text-slate-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
                   <div className="mt-5">
-                    <button type="button" className="py-3 px-2 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                    <button type="button" className="w-full py-3 px-2 inline-flex justify-center items-center gap-2 rounded-md border border-slate-300 font-medium bg-white text-slate-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
                       <svg className="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
                         <path d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z" fill="#4285F4" />
                         <path d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z" fill="#34A853" />
@@ -268,20 +279,20 @@ const UserForm = ({ formType, action }) => {
             <>
                 <div className="p-2 sm:p-7">
 
-                  <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
 
                   <div className="text-center">
-                    <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Sign in</h1>
-                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                    {/* <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Sign in</h1> */}
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                       Don't have an account yet?
                       <Link className="text-blue-600 decoration-2 hover:underline font-medium" to="/signup">
                         Sign up here
                       </Link>
                     </p>
                   </div>
+                  <div className="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
 
                   <div className="mt-5">
-                    <button type="button" className="py-3 px-2 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                    <button type="button" className="w-full py-3 px-2 inline-flex justify-center items-center gap-2 rounded-md border border-slate-300 font-medium bg-white text-slate-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
                       <svg className="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
                         <path d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z" fill="#4285F4" />
                         <path d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z" fill="#34A853" />

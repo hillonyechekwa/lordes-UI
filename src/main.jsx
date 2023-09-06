@@ -6,7 +6,7 @@ import { NotFound } from './pages/NotFound.jsx'
 import {ApolloClient, ApolloProvider, createHttpLink, gql} from '@apollo/client';
 import {cache} from './cache'
 import {setContext} from '@apollo/client/link/context'
-import {cartProvider} from 'use-shopping-cart'
+import {CartProvider} from 'use-shopping-cart'
 import('preline')
 
 
@@ -57,12 +57,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <CartProvider
      mode="payment"
      cartMode="client-only"
-     stripe={YOUR_STRIPE_API_KEY_GOES_HERE}
-     successUrl="/success"
-     cancelUrl=""
+     stripe=""
+     successUrl="{`${import.meta.env.BASE_URL}/success`}"
+     cancelUrl="{`${import.meta.env.BASE_URL}/success=false`}"
      currency="NGN"
-     allowedCountries={['US', 'NG', 'CA']}
-     billingAddressCollection={true}
+     allowedCountries={['NG']}
+     shouldPersist={true}
     >
   <ApolloProvider client={client}>
       <RouterProvider router={router} />

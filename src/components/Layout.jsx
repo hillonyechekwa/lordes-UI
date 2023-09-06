@@ -14,7 +14,9 @@ const Layout = ({children}) => {
 		<main className="w-full">
 			{children}
 		</main>
-		<Footer />
+		{
+			location.pathname === "/signup" || location.pathname === "/signin" ? "" : <Footer />
+		}
 	</main>
 	)
 }
