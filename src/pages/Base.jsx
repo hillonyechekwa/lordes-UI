@@ -26,10 +26,10 @@ const Base = () => {
         <title>Lorde&apos;s | Home</title>
       </Helmet>
       <main className="pt-8 container mx-auto">
-        <header className="max-w-[85rem] font-sans mx-auto px-4 sm:px-6 lg:px-8">
+        <header className=" max-w-[85rem] font-sans mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center">
             <div>
-              <h1 className="block text-3xl font-sans font-medium text-slate-800 sm:text-4xl lg:text-6xl lg:leading-tight">Great hair services with <span className="text-violet-600 font-semibold" >Lorde&apos;s</span></h1>
+              <h1 className="block text-3xl font-sans font-medium text-slate-800 sm:text-4xl lg:text-6xl lg:leading-tight">Get Great Hair Services With <span className="text-violet-600 font-semibold" >Lorde&apos;s</span></h1>
               <p className="mt-3 text-lg text-slate-500 dark:text-gray-400">Get styled by hand-picked professionals from the comfort of any location.</p>
 
               <div className="mt-7 grid gap-3 w-full sm:inline-flex">
@@ -42,11 +42,11 @@ const Base = () => {
             </div>
 
             {/*-----------------image columns-------------*/}
-            <div className="relative ml-4">
-              <img className="w-full h-fit" src="/images/transparents/hero-test-2.png" alt="hero image" />
-              <div className="absolute inset-0 -z-[1] bg-gradient-to-tr from-violet-600 via-white/0 to-white/0 w-full h-full rounded-md mt-4 -mb-4 mr-4 -ml-4 lg:mt-6 lg:-mb-6 lg:mr-6 lg:-ml-6 dark:from-slate-800 dark:via-slate-900/0 dark:to-slate-900/0"></div>
+            <div className="w-auto h-auto relative ml-4 p-20">
+              <img className="w-90 h-fit" src="/images/transparents/yellow-man.png" alt="hero image" />
+              <div className="absolute inset-0 -z-[1] bg-gradient-to-tr from-violet-50 via-white/0 to-white/0 w-full h-full rounded-md mt-4 -mb-4 mr-4 -ml-4 lg:mt-6 lg:-mb-6 lg:mr-6 lg:-ml-6 dark:from-slate-800 dark:via-slate-900/0 dark:to-slate-900/0"></div>
 
-              <div className="absolute bottom-0 left-0">
+              <div className="absolute bottom-20 left-0">
                 <svg className="w-2/3 ml-auto h-auto text-white dark:text-slate-900" width="630" height="451" viewBox="0 0 630 451" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="531" y="352" width="99" height="99" fill="currentColor" />
                   <rect x="140" y="352" width="106" height="99" fill="currentColor" />
@@ -312,17 +312,17 @@ const Base = () => {
 
                 <div className="grid grid-cols-12 gap-2 sm:gap-6 items-center lg:-translate-x-10">
                   <div className="col-span-4">
-                    <img className="rounded-xl" src="https://images.unsplash.com/photo-1606868306217-dbf5046868d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1981&q=80" alt="Image Description" />
+                    <img className="rounded-xl" src="/images/third-section-5.webp" alt="Image Description" />
                   </div>
 
 
                   <div className="col-span-3">
-                    <img className="rounded-xl" src="https://images.unsplash.com/photo-1605629921711-2f6b00c6bbf4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80" alt="Image Description" />
+                    <img className="rounded-xl" src="/images/third-section-1.webp" alt="Image Description" />
                   </div>
 
 
                   <div className="col-span-5">
-                    <img className="rounded-xl" src="https://images.unsplash.com/photo-1600194992440-50b26e0a0309?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80" alt="Image Description" />
+                    <img className="rounded-xl" src="/images/third-section-4.jpg" alt="Image Description" />
                   </div>
 
                 </div>
@@ -343,10 +343,9 @@ const Base = () => {
                   </div>
 
 
-
                   <ul role="list" className="space-y-2 sm:space-y-4">
                     <li className="flex space-x-3">
-                      <svg className="flex-shrink-0 h-6 w-6 text-blue-600 dark:text-blue-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="flex-shrink-0 h-6 w-6 text-violet-600 dark:text-blue-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.1965 7.85999C15.1965 3.71785 11.8387 0.359985 7.69653 0.359985C3.5544 0.359985 0.196533 3.71785 0.196533 7.85999C0.196533 12.0021 3.5544 15.36 7.69653 15.36C11.8387 15.36 15.1965 12.0021 15.1965 7.85999Z" fill="currentColor" fillOpacity="0.1" />
                         <path d="M10.9295 4.88618C11.1083 4.67577 11.4238 4.65019 11.6343 4.82904C11.8446 5.00788 11.8702 5.32343 11.6914 5.53383L7.44139 10.5338C7.25974 10.7475 6.93787 10.77 6.72825 10.5837L4.47825 8.5837C4.27186 8.40024 4.25327 8.0842 4.43673 7.87781C4.62019 7.67142 4.93622 7.65283 5.14261 7.83629L7.01053 9.49669L10.9295 4.88618Z" fill="currentColor" />
                       </svg>
@@ -359,7 +358,7 @@ const Base = () => {
 
                     <li className="flex space-x-3">
 
-                      <svg className="flex-shrink-0 h-6 w-6 text-blue-600 dark:text-blue-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="flex-shrink-0 h-6 w-6 text-violet-600 dark:text-blue-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.1965 7.85999C15.1965 3.71785 11.8387 0.359985 7.69653 0.359985C3.5544 0.359985 0.196533 3.71785 0.196533 7.85999C0.196533 12.0021 3.5544 15.36 7.69653 15.36C11.8387 15.36 15.1965 12.0021 15.1965 7.85999Z" fill="currentColor" fillOpacity="0.1" />
                         <path d="M10.9295 4.88618C11.1083 4.67577 11.4238 4.65019 11.6343 4.82904C11.8446 5.00788 11.8702 5.32343 11.6914 5.53383L7.44139 10.5338C7.25974 10.7475 6.93787 10.77 6.72825 10.5837L4.47825 8.5837C4.27186 8.40024 4.25327 8.0842 4.43673 7.87781C4.62019 7.67142 4.93622 7.65283 5.14261 7.83629L7.01053 9.49669L10.9295 4.88618Z" fill="currentColor" />
                       </svg>
@@ -372,7 +371,7 @@ const Base = () => {
 
                     <li className="flex space-x-3">
 
-                      <svg className="flex-shrink-0 h-6 w-6 text-blue-600 dark:text-blue-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg className="flex-shrink-0 h-6 w-6 text-violet-600 dark:text-blue-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.1965 7.85999C15.1965 3.71785 11.8387 0.359985 7.69653 0.359985C3.5544 0.359985 0.196533 3.71785 0.196533 7.85999C0.196533 12.0021 3.5544 15.36 7.69653 15.36C11.8387 15.36 15.1965 12.0021 15.1965 7.85999Z" fill="currentColor" fillOpacity="0.1" />
                         <path d="M10.9295 4.88618C11.1083 4.67577 11.4238 4.65019 11.6343 4.82904C11.8446 5.00788 11.8702 5.32343 11.6914 5.53383L7.44139 10.5338C7.25974 10.7475 6.93787 10.77 6.72825 10.5837L4.47825 8.5837C4.27186 8.40024 4.25327 8.0842 4.43673 7.87781C4.62019 7.67142 4.93622 7.65283 5.14261 7.83629L7.01053 9.49669L10.9295 4.88618Z" fill="currentColor" />
                       </svg>
