@@ -1,5 +1,4 @@
 import { useFormik } from "formik"
-import { useState } from 'react'
 import { Helmet } from "react-helmet"
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
@@ -7,9 +6,7 @@ import * as Yup from 'yup'
 
 //TODO: do css and javascript client side validataion.
 //this has to be a joke and probably something is definitely wrong.
-const UserForm = ({ formType, action }) => {
-
-  const [values, setValues] = useState()
+const UserForm = ({ formType, action, loading }) => {
 
   const formik = useFormik({
     initialValues: {
@@ -19,58 +16,92 @@ const UserForm = ({ formType, action }) => {
       confirmPassword: '', //there's no need to create an implementation in the backend.
       role: ''
     },
-    validationSchema: Yup.object({
-      username: Yup.string()
-      .min(3, 'Must be at least 3 characters')
-      .required('This field can\'t be empty'),
-      email: Yup.string()
-      .email('Invalid email address')
-      .required('This field can\'t be empty'),
-      password: Yup.string()
-      .min(8, 'Password must be at least 8 characters')
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])/,
-      'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol'
-      )
-      .required('This field can\'t be empty'),
-      confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Passwords must match')
-      .required('This field can\'t be empty'),
-      role: Yup.string()
-      .required('Please select a role')
-    }),
-    onSubmit: values => {
-      console.log('values', values)
-      action({
-        variables: {
-          ...values
-        }
-      })
+    validationSchema: () => {
+      if (formType === "signup") {
+        return Yup.object({
+          username: Yup.string()
+            .min(3, 'Must be at least 3 characters')
+            .max(20, 'Can\'t be more than 20 characters')
+            .matach(/^[a-zA-Z0-9_]+$/,
+              'usernames can only include letters, numbers and underscores')
+            .required('This field can\'t be empty'),
+          email: Yup.string()
+            .email('Invalid email address')
+            .required('This field can\'t be empty'),
+          password: Yup.string()
+            .min(8, 'Password must be at least 8 characters')
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])/,
+              'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol'
+            )
+            .required('This field can\'t be empty'),
+          confirmPassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Passwords must match')
+            .required('This field can\'t be empty'),
+          role: Yup.string()
+            .oneOf(
+              ['user', 'stylist', 'merchant'],
+              'Invalid role'
+            )
+            .required('You have to select a role'),
+        })
+      } else if (formType === "signin") {
+        return Yup.object({
+          username: Yup.string()
+            .min(3, 'Must be at least 3 characters'),
+          email: Yup.string()
+            .email('Invalid email address'),
+          password: Yup.string()
+            .min(8, 'Password must be at least 8 characters')
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])/,
+              'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol')
+            .required('This field can\'t be empty')
+        })
+      }
     },
-    onChange: event => {
-      setValues({
-        ...values,
-        [event.target.name]: [event.target.value]
-      })
-    }
+    onSubmit: values => {
+      // console.log('userform values', values)
+      const { username, email, password, } = values
+      
+        formType === "signup" ?
+        action({
+          variables: {
+            username,
+            email,
+            password,
+            role
+          }
+        })
+        :
+        action({
+          variables: {
+            username,
+            email,
+            password
+          }
+        })
+      
+    },
   })
 
+
+  // console.log('validationschema', formik.validationSchema)
 
 
 
 
   return (
-    <main className="w-full h-auto p-4 grid grid-cols-2 grid-rows-1 justify-evenly items-center">
+    <main className="w-full h-auto p-4 flex flex-row justify-evenly items-center">
       <Helmet>
         <meta charSet="UTF-8" />
         <title>Lorde&apos;s - {formType === 'signup' ? 'Sign Up' : 'Sign In'}</title>
       </Helmet>
       <section className="w-full relative p-12">
-      <Link className="mb-12 w-full sm:w-auto inline-flex  justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-slate-500 hover:text-violet-700 focus:outline-none focus:ring-2 ring-offset-white focus:ring-violet-500 focus:ring-offset-2 transition-all text-sm py-3 px-4 dark:ring-offset-slate-900" to="/">
-            <svg className="w-2.5 h-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M11.2792 1.64001L5.63273 7.28646C5.43747 7.48172 5.43747 7.79831 5.63273 7.99357L11.2792 13.64" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-            Go back
-          </Link>
+        <Link className="mb-12 w-full sm:w-auto inline-flex  justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-slate-500 hover:text-violet-700 focus:outline-none focus:ring-2 ring-offset-white focus:ring-violet-500 focus:ring-offset-2 transition-all text-sm py-3 px-4 dark:ring-offset-slate-900" to="/">
+          <svg className="w-2.5 h-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M11.2792 1.64001L5.63273 7.28646C5.43747 7.48172 5.43747 7.79831 5.63273 7.99357L11.2792 13.64" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          Go back
+        </Link>
         {
           formType === "signup" ?
             <img className="w-full rounded-lg" src="/images/third-section-3.jpg" alt="signup page image" />
@@ -82,23 +113,23 @@ const UserForm = ({ formType, action }) => {
 
 
         <form onSubmit={formik.handleSubmit} className="w-full flex flex-col h-auto justify-between font-sans items-center relative">
-          <header className="w-full h-40 rounded-lg p-6 flex justify-around items-center flex-col font-sans text-center bg-white text-violet-900 mb-6 dark:bg-slate-700 dark: text-white">
+          <header className="w-full h-40 rounded-lg p-6 flex justify-around items-center flex-col font-sans font-semibold text-center bg-white mb-6 dark:bg-slate-700 dark: text-white">
             {formType === 'signup' ?
               <>
-                <h1 className="text-3xl font-semibold break-words capitalize">Sign Up</h1>
-                <p className="font-thin text-slate-600">Join lorde's to gain access the hair services provided my millions of stylists</p>
-              </> 
+                <h1 className="text-slate-700 text-6xl font-semibold break-words capitalize">Sign Up</h1>
+                <p className=" text-slate-400 font-medium">Join lorde's to gain access the hair services provided my millions of stylists</p>
+              </>
               :
               <>
-                <h1 className="text-3xl font-semibold break-words capitalize">Welcome back</h1>
-                <p className="font-thin text-slate-600">Let&apos;s make that hair look great</p>
+                <h1 className="text-slate-700 text-6xl font-semibold break-words capitalize">Welcome back</h1>
+                <p className="font-medium text-slate-400">Let&apos;s make that hair look great</p>
               </>}
 
           </header>
           <small className="text-slate-500 text-xs">* = required</small>
           {/* username and email */}
           {
-            formType === "signup" ?
+            formType === "signup" && (
               <>
                 {/* ---------email----------- */}
                 <div className="font-sans">
@@ -106,12 +137,12 @@ const UserForm = ({ formType, action }) => {
                   <div className="relative">
                     <input type="email" id="email" name="email" {...formik.getFieldProps('email')} placeholder="Your email here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
                     {formik.touched.email && formik.errors.email ? (
-                    <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                      <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                      </svg>
-                    </div>
-                    ): null}
+                      <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                        <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                      </div>
+                    ) : null}
                   </div>
                   {formik.touched.email && formik.errors.email ? (
                     <p className="text-xs text-red-600 mt-2" id="email-error">{formik.errors.email}</p>
@@ -121,37 +152,41 @@ const UserForm = ({ formType, action }) => {
                 <div className="font-sans">
                   <label htmlFor="username" className="block mt-5 text-sm mb-2 text-slate-500 font-semibold dark:text-white">Username*</label>
                   <div className="relative">
-                    <input type="username" id="username" name="username" {...formik.getFieldProps('username')} placeholder="Your username here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
-                  {formik.touched.username && formik.errors.username ? (
-                    <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                      <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                      </svg>
-                    </div>
-                  ): null}
+                    <input type="username" id="username" name="username" {...formik.getFieldProps('username')} placeholder="Your username here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="username-error" />
+                    {formik.touched.username && formik.errors.username ? (
+                      <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                        <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                      </div>
+                    ) : null}
                   </div>
                   {formik.touched.username && formik.errors.username ? (
-                    <p className="text-xs text-red-600 mt-2" id="email-error">{formik.errors.username}</p>
+                    <p className="text-xs text-red-600 mt-2" id="username-error">{formik.errors.username}</p>
                   ) : null}
                 </div>
               </>
-              :
+            )}
+          {
+            formType === 'signin' && (
               <>
-              {/* -------------email------------- */}
+                {/* -------------email------------- */}
                 <div>
                   <label htmlFor="email" className="block mt-5 text-sm font-semibold text-slate-500 mb-2 dark:text-white">Email address</label>
                   <div className="relative">
-                    <input type="email" id="email" name="email" {...formik.getFieldProps('email')} placeholder="Your email here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
-                  {formik.touched.email && formik.errors.email ? (
-                    <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                      <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                      </svg>
-                    </div>
-                  ): null}
+                    <input type="email" id="email" name="email" {...formik.getFieldProps('email')} placeholder="Your email here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" aria-describedby="email-error" />
+                    {formik.touched.email && formik.errors.email ? (
+
+                      <div className="invisible absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                        <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                      </div>
+                    ) : null}
+
                   </div>
                   {formik.touched.email && formik.errors.email ? (
-                    <p className="text-xs text-red-600 mt-2" id="email-error">{formik.errors.email}</p>
+                    <p className=" hidden text-xs text-red-600 mt-2" id="email-error"> {formik.errors.email}</p>
                   ) : null}
                 </div>
                 <div className="py-3 flex items-center font-medium text-xs text-gray-600 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
@@ -159,24 +194,27 @@ const UserForm = ({ formType, action }) => {
                 <div>
                   <label htmlFor="username" className="block mt-5 text-sm font-semibold text-slate-500 mb-2 dark:text-white">Username</label>
                   <div className="relative">
-                    <input type="username" id="username" name="username" {...formik.getFieldProps('username')} placeholder="Your username here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="email-error" />
-                  {formik.touched.username && formik.errors.username ? (
+                    <input type="username" id="username" name="username" {...formik.getFieldProps('username')} placeholder="Your username here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" aria-describedby="username-error" />
 
-                    <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                      <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                      </svg>
-                    </div>
-                  ):null}
+                    {formik.touched.username && formik.errors.username ? (
+
+                      <div className="invisible absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                        <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                      </div>
+                    ) : null}
+
                   </div>
                   {formik.touched.username && formik.errors.username ? (
-                    <p className="text-xs text-red-600 mt-2" id="email-error">{formik.errors.username}</p>
+
+                    <p className=" hidden text-xs text-red-600 mt-2" id="username-error">{formik.errors.username}</p>
                   ) : null}
                 </div>
               </>
-          }
+            )}
           {
-            formType === 'signup' ?
+            formType === 'signup' && (
               <>
                 <div>
                   <div className="flex justify-between items-center">
@@ -184,17 +222,17 @@ const UserForm = ({ formType, action }) => {
                   </div>
                   <div className="relative">
                     <input type="password" id="password" name="password" {...formik.getFieldProps('password')} placeholder="Your password here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="password-error" />
-                  {formik.touched.password && formik.errors.password? (
-                    <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                      <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                      </svg>
-                    </div>
-                  ): null}
+                    {formik.touched.password && formik.errors.password ? (
+                      <div className=" absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                        <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                      </div>
+                    ) : null}
                   </div>
-                  {formik.touched.password && formik.errors.password? (
+                  {formik.touched.password && formik.errors.password ? (
                     <p className="text-xs text-red-600 mt-2" id="password-error">{formik.errors.password}</p>
-                  ):null}
+                  ) : null}
                 </div>
                 <div>
                   <div className="flex justify-between items-center">
@@ -202,20 +240,22 @@ const UserForm = ({ formType, action }) => {
                   </div>
                   <div className="relative">
                     <input type="password" id="confirmPassword" name="confirmPassword" {...formik.getFieldProps('confirmPassword')} placeholder="Confirm your password" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="password-error" />
-                  {formik.touched.confirmPassword && formik.errors.confirmPassword? (
-                    <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                      <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                      </svg>
-                    </div>
-                  ):null}
+                    {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+                      <div className=" absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                        <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                      </div>
+                    ) : null}
                   </div>
-                  {formik.touched.confirmPassword && formik.errors.confirmPassword? (
+                  {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
                     <p className="text-xs text-red-600 mt-2" id="password-error">{formik.errors.confirmPassword}</p>
-                  ):null}
+                  ) : null}
                 </div>
               </>
-              :
+            )}
+          {
+            formType === "signin" && (
               <>
                 <div>
                   <div className="flex justify-between items-center">
@@ -224,44 +264,56 @@ const UserForm = ({ formType, action }) => {
                   </div>
                   <div className="relative">
                     <input type="password" id="password" name="password" {...formik.getFieldProps('password')} placeholder="Your password here" className="py-3 px-8 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" required aria-describedby="password-error" />
-                  {formik.touched.password && formik.errors.password? (
-                    <div className="hidden absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                      <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                      </svg>
-                    </div>
-                  ): null}
+                    {formik.touched.password && formik.errors.password ? (
+                      <div className=" absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                        <svg className="h-5 w-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                      </div>
+                    ) : null}
                   </div>
-                  {formik.touched.password && formik.errors.password? (
+                  {formik.touched.password && formik.errors.password ? (
                     <p className="text-xs text-red-600 mt-2" id="password-error">{formik.errors.password}</p>
-                  ):null}
+                  ) : null}
                 </div>
               </>
+            )
           }
           {
             formType === "signup" && (
               <div className="px-4">
-                <label htmlForor="select-1" class="block mt-5 text-sm font-semibold text-slate-500 mb-2 dark:text-white">I am signing up to:*</label>
-                <select id="role" name="role" {...formik.getFieldProps('role')} class="py-3 px-4 pr-9 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" required>
+                <label htmlFor="select-1" className="block mt-5 text-sm font-semibold text-slate-500 mb-2 dark:text-white">I am signing up to:*</label>
+                <select id="role" name="role" {...formik.getFieldProps('role')} className="py-3 px-4 pr-9 block w-full border border-slate-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" required>
                   <option defaultValue="">I am signing up to </option>
                   <option value="user">get hair services</option>
                   <option value="stylist">render hair services as a styist</option>
                   <option value="merchant">sell hair products as a merchant</option>
                 </select>
-                {formik.touched.role && formik.errors.role? (
-                  <p class="text-sm text-red-600 mt-2"> {formik.errors.role}</p>
-                ): null}
+                {formik.touched.role && formik.errors.role ? (
+                  <p className="text-sm text-red-600 mt-2"> {formik.errors.role}</p>
+                ) : null}
               </div>
             )
           }
-          
-           <button type="submit" className="mt-8 py-3 px-20 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-violet-600 text-white hover:bg-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-            {formType === "signup"? "Sign Up" : "Sign In"}
-           </button>
+          {
+            formType === "signup" && (
+              <button type="submit" className={`mt-8 py-3 px-20 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-violet-600 text-white hover:bg-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800`}>
+                {/* {loading ? <span class="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading"></span> : "Sign Up"} */}
+                Sign Up
+              </button>
+            )
+          }
+          {
+            formType === "signin" && (
+              <button type="submit" className={`mt-8 py-3 px-20 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-violet-600 text-white hover:bg-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800`} >
+                {/* {loading ? <span class="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-white rounded-full" role="status" aria-label="loading"></span> : "Sign In"} */}
+                Sign In
+              </button>
+            )}
 
           {
-            formType === "signup"?
-            <>
+            formType === "signup" && (
+              <>
                 <div className="p-2 sm:p-7">
 
 
@@ -291,9 +343,12 @@ const UserForm = ({ formType, action }) => {
 
                   </div>
                 </div>
-            </>
-            :
-            <>
+              </>
+            )}
+          {
+            formType === "signin" && (
+
+              <>
                 <div className="p-2 sm:p-7">
 
 
@@ -323,8 +378,8 @@ const UserForm = ({ formType, action }) => {
 
                   </div>
                 </div>
-            </>
-          }
+              </>
+            )}
         </form>
       </main>
     </main>

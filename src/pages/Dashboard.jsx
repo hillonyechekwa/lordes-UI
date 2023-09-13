@@ -1,5 +1,6 @@
-import {useQuery, gql} from '@apollo/client';
-import {Helmet} from 'react-helmet'
+import { useQuery, gql } from '@apollo/client';
+import { Helmet } from 'react-helmet'
+import {useNavigate} from 'react-router-dom'
 import SideBar from '../components/SideBar'
 import Card from '../components/HoverCard'
 
@@ -26,42 +27,52 @@ const GET_USERS = gql`
 `
 
 
-const Dashboard = ( ) => {
-	const {data, loading, error} = useQuery(GET_USERS)
-	
-	
+const Dashboard = () => {
+	const { data, loading, error } = useQuery(GET_USERS)
+
+
 	if (loading) return <p> ...loading </p>
 	if (error) return <p>error: {error.message} </p>
 	if (data === undefined) <p> error: {error.message} </p>
-	
-	
+
+
 	return (
-		<main>
+		<main className="container mx-auto pt-8 text-center">
 			<Helmet>
 				<title>Lordes | Dashboard</title>
 			</Helmet>
-			<section>
-				This is a user dashboard
-			</section>
+
 			{
 				data.me.role === 'STYLIST' &&
 				(
-					<></>
+					<>
+						<section>
+							This is a stylist dashboard
+						</section>
+					</>
 				)
 			}
 			{
-				data.me.role === 'MERCHANT' && 
+				data.me.role === 'MERCHANT' &&
 				(
-					<></>
+					<>
+						<section>
+							This is a merchant dashboard
+						</section>
+					</>
 				)
 			}
 			{
-				data.me.role === 'USER' && 
+				data.me.role === 'USER' &&
 				(
-					<></>
+					<>
+						<section>
+							This is a user dashboard
+						</section>
+					</>
 				)
 			}
-			
+
 		</main>
 	)
 }

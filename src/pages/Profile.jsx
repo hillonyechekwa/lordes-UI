@@ -1,6 +1,9 @@
 import {useQuery, gql} from '@apollo/client';
 import { Link } from 'react-router-dom';
 import {Helmet} from 'react-helemet';
+//update and import tabs component
+//import and add the trigger for a small modal component.
+//import and update card components
 
 
 

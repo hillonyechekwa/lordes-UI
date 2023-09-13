@@ -1,7 +1,8 @@
 import {useMutation, gql} from '@apollo/client'
 import { isSignedInVar } from '../cache'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, redirect } from 'react-router-dom'
 import UserForm from '../templates/UserForm'
+import Spinner from '../components/Spinner'
 
 
 const SIGNUP_USER = gql`
@@ -14,16 +15,20 @@ const SignUp = () => {
 	const navigate = useNavigate()
 	const [signUp, {loading, error}] = useMutation(SIGNUP_USER, {
 		onCompleted({signUp}) {
+			console.log(signUp)
 			if(signUp){
-				localStorage.setItem('token', signUp.token);
+				localStorage.setItem('token', signUp);
 				isSignedInVar(true)
-				navigate('/onboarding')
+				navigate('/')
 			}
+		},
+		onError: () => {
+			redirect("/signup")
 		}
 	})
 	
 	
-	if(loading) return <p>...loading</p>
+	if(loading) return <Spinner message="creating your account, please wait" size="large" />
 	if(error) return <p>An error occured: {error.message}</p>
 		
 	return(

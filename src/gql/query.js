@@ -107,22 +107,24 @@ const GET_USER = gql`
 `
 
 const GET_ME = gql`
-	query me{
-		id
-		username
-		bio
-		location
-		role
-		catalogue{
+	query Profile{
+	 	me{
 			id
-			name
-			price
-		}
-		productCatalogue{
-			id
-			name
-			price
-			quantity
+			username
+			bio
+			location
+			role
+			catalogue{
+				id
+				name
+				price
+			}
+			productCatalogue{
+				id
+				name
+				price
+				quantity
+			}
 		}
 	}
 `
